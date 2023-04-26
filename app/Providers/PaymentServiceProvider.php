@@ -19,19 +19,16 @@ class PaymentServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(PaymentService::class, function ($app) {
-            $partnerPaymentId = $app->request->route('partner_payment_id') ?? $app->request->route('payment_id') ?? request()->get('payment_id');
-            $partnerId = $app->request->route('partner_id') ?? request()->get('partner_id');
-
-            $payment = Payment::query()->where('partner_payment_id', $partnerPaymentId)->first();
-            $partner = Partner::query()->where('external_partner_id', $partnerId)->first();
-
+            // Get provider
             $provider = "App\\Services\\PaymentService\\Payments\\" . ucfirst($payment->handler);
+
+            // get partner $partner $partner
 
             if (!class_exists($provider)) {
                 throw new InvalidTypeOfPaymentException("Payment handler with id: " . $partnerPaymentId . " does not found.");
             }
 
-            $configs = PaymentConfigs::query()->where('payment_id', $payment->id)->where('partner_id', $partner->id)->first();
+            // Get configs $configs =
 
             if (!$configs) {
                 throw new InvalidTypeOfPaymentException("Configs of payment type with id: \"{$partnerPaymentId}\" does not found.");

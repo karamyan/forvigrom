@@ -33,14 +33,6 @@ abstract class PaymentAbstract
      */
     private string $currencyCode;
 
-    protected string $paymentSuccessMessage = "Վճարումն ընդունված է";
-
-    protected string $paymentErrorMessage = "Վճարումն ընդունված չէ";
-
-    protected string $checkSuccessMessage = "Գործողությունը թույլատրված է";
-
-    protected string $checkErrorMessage = "Գործողությունը թույլատրված չէ";
-
     private array $requestData = [];
 
     /**
